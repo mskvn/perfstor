@@ -1,6 +1,6 @@
 # perfstor README
 
-## Установка и запуск проекта
+## Установка библиотек
 
 ```bash
 python -m venv venv
@@ -8,14 +8,12 @@ source venv/bin/activate
 pip install django djangorestframework
 ```
 
-## Cоздание проекта и приложения
+## Cоздание проекта и настройка
 
 ```bash
 django-admin startproject perfstor .
 python manage.py startapp runs
 ```
-
-## Настройка проекта
 
 В `perfstor/settings.py` добавьте в `INSTALLED_APPS`:
 
@@ -27,7 +25,7 @@ INSTALLED_APPS = [
 ]
 ```
 
-## Модель Run
+## Создание Модели Run
 
 В `runs/models.py`:
 
@@ -44,14 +42,14 @@ class Run(models.Model):
         return f"{self.testName} ({self.timeStart} - {self.timeEnd})"
 ```
 
-## Миграции
+## Генерация миграции
 
 ```bash
 python manage.py makemigrations
 python manage.py migrate
 ```
 
-## Views и формы
+## Создание Views
 
 В `runs/forms.py`:
 
@@ -131,7 +129,7 @@ def create_run_api(request):
         return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 ```
 
-## 🌐 URLs
+## Маршруты
 
 В `runs/urls.py`:
 
@@ -161,7 +159,7 @@ urlpatterns = [
 ]
 ```
 
-## 🧱 Шаблоны (html)
+## Создание Шаблонов
 
 Создайте папку `runs/templates/runs/` и добавьте шаблоны:
 
