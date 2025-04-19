@@ -1,0 +1,16 @@
+{% extends 'runs/base.html' %}
+
+{% block content %}
+<h1>Report</h1>
+<div class="card">
+  <div class="card-header">
+    <h3>Details</h3>
+  </div>
+  <div class="card-body">
+    <p><strong>Test Name:</strong> {{ run.testName }}</p>
+    <p><strong>Start Time:</strong> {{ run.timeStart }}</p>
+    <p><strong>End Time:</strong> {{ run.timeEnd }}</p>
+    <p><strong>Duration:</strong> {{ run.duration }} seconds</p>
+  </div>
+</div>
+{% endblock %}
