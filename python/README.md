@@ -274,7 +274,7 @@ python manage.py runserver
 curl -X POST http://127.0.0.1:8000/api/run/ \
 -H "Content-Type: application/json" \
 -d '{
-  "testName": "SmokeTest",
+  "testName": "OpenSiteRoot",
   "timeStart": "2025-04-19T12:00:00Z",
   "timeEnd": "2025-04-19T12:15:00Z",
   "duration": 900.0
