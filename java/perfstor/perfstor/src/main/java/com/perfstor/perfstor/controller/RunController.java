@@ -5,6 +5,8 @@ import com.perfstor.perfstor.repository.RunRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 @Controller
 @RequestMapping("/runs")
@@ -50,5 +52,13 @@ public class RunController {
   public String deleteRun(@PathVariable Long id) {
     runRepository.deleteById(id);
     return "redirect:/runs";
+  }
+
+  @GetMapping("/{id}/report")
+  public String runReport(@PathVariable Long id, Model model) {
+      Run run = runRepository.findById(id)
+          .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+      model.addAttribute("run", run);
+      return "runs/report";
   }
 }

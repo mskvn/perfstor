@@ -114,6 +114,8 @@ import com.perfstor.perfstor.repository.RunRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 @Controller
 @RequestMapping("/runs")
@@ -160,6 +162,14 @@ public class RunController {
         runRepository.deleteById(id);
         return "redirect:/runs";
     }
+
+    @GetMapping("/{id}/report")
+    public String runReport(@PathVariable Long id, Model model) {
+      Run run = runRepository.findById(id)
+          .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+      model.addAttribute("run", run);
+      return "runs/report";
+    }
 }
 ```
 
@@ -188,6 +198,7 @@ public class RunController {
     <td th:text="${run.timeEnd}"></td>
     <td th:text="${run.duration}"></td>
     <td>
+        <a class="btn btn-sm btn-info" th:href="@{/runs/{id}/report(id=${run.id})}">Report</a>
         <a th:href="@{'/runs/' + ${run.id} + '/edit'}" class="btn btn-sm btn-warning">Edit</a>
         <form th:action="@{'/runs/' + ${run.id} + '/delete'}" method="post" style="display:inline">
             <button class="btn btn-sm btn-danger">Delete</button>
@@ -232,6 +243,40 @@ public class RunController {
   </div>
   <button class="btn btn-success">Save</button>
 </form>
+</body>
+</html>
+```
+
+### `report.html`
+
+```html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Run Report</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body class="p-4">
+  <h1>Run Report</h1>
+  <table class="table table-bordered">
+    <tr>
+      <th>Test Name</th>
+      <td th:text="${run.testName}"></td>
+    </tr>
+    <tr>
+      <th>Start Time</th>
+      <td th:text="${run.timeStart}"></td>
+    </tr>
+    <tr>
+      <th>End Time</th>
+      <td th:text="${run.timeEnd}"></td>
+    </tr>
+    <tr>
+      <th>Duration (sec)</th>
+      <td th:text="${run.duration}"></td>
+    </tr>
+  </table>
+  <a class="btn btn-primary" th:href="@{/runs}">Back to List</a>
 </body>
 </html>
 ```
