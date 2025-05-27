@@ -1,6 +1,0 @@
-{
-  "build": {
-    "context": "python",
-    "dockerfilePath": "python/Dockerfile"
-  }
-}
