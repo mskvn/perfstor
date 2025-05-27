@@ -1,0 +1,22 @@
+---
+name: Load tests
+run-name: Run load tests
+
+on:
+  workflow_dispatch:
+
+
+jobs:
+  save-run:
+    name: Save run to perfstor
+    runs-on: ubuntu-latest
+    outputs:
+      run_id: ${{ steps.save-run.outputs.id }}
+    steps:
+      - name: Save run
+        id: save-run
+        shell: bash
+        run: |
+          time_start=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          ...
+          id=$(curl --silent  --location '${{ vars.URL }}/api/run' ...)
